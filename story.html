@@ -125,11 +125,20 @@
         }
 
         /* 滚动文字区域 */
-        .text-scroll-area {
-            flex: 1; /* 占据剩余空间 */
-            overflow-y: auto; /* 允许垂直滚动 */
-            padding-right: 15px; /* 给滚动条留点位置 */
-            margin-bottom: 20px;
+       .text-scroll-area {
+           margin-top: 20px;
+           margin-bottom: 30px;
+           flex: 1;
+           overflow-y: auto; 
+           padding-right: 10px;
+    
+        /* --- 新增：隐藏滚动条但允许滚动 --- */
+           scrollbar-width: none; /* Firefox */
+           -ms-overflow-style: none;  /* IE and Edge */
+        }
+        /* Chrome, Safari, Opera 隐藏滚动条 */
+       .text-scroll-area::-webkit-scrollbar { 
+           display: none; 
         }
 
         /* 滚动条美化 */
