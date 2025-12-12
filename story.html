@@ -5,179 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Journey - Steppe, Concrete, and Stage</title>
     <style>
-        /* --- 1. 全局布局 --- */
+        /* --- 1. 全局基础设置 --- */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden; /* 禁止整页滚动 */
             font-family: "Georgia", "Times New Roman", serif;
-            background-color: transparent;
+            background-color: transparent; /* 确保背景透明，不挡视频 */
             color: #fff;
         }
 
-/* --- 2. 背景视频优化 --- */
-#bg-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    filter: brightness(0.6); /* 稍微调暗背景 */
-    transition: opacity 0.5s ease;
-    
-    /* 【关键魔法】 */
-    /* 既然文字在左边，我们让视频显示的区域偏向右边 */
-    /* 这样原本在正中间的石头/鹦鹉，就会在视觉上出现在屏幕右侧的空白处 */
-    object-position: 70% center; 
-}
-
-/* --- 3. 内容容器（侧边栏风格） --- */
-.story-container {
-    position: absolute;
-    top: 0;
-    left: 0; /* 靠左停靠 */
-    bottom: 0; /* 高度铺满 */
-    
-    width: 450px; /* 固定宽度，或者用 35% */
-    max-width: 90vw; /* 防止手机上太宽 */
-    
-    background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.6)); /* 渐变黑背景 */
-    backdrop-filter: blur(10px); /* 毛玻璃效果 */
-    border-right: 1px solid rgba(255, 255, 255, 0.1); /* 右侧加一条淡淡的分界线 */
-    
-    padding: 60px 40px; /* 增加内边距，呼吸感更强 */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    
-    /* 移除之前的居中变换代码 */
-    transform: none; 
-    animation: slideRight 0.8s ease-out;
-}
-
-/* 调整标题大小，适应侧边栏 */
-#chapter-title {
-    font-size: 2rem;
-    line-height: 1.2;
-}
-
-/* 调整正文区域 */
-.text-scroll-area {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    /* 隐藏滚动条但保留功能（Webkit浏览器） */
-    scrollbar-width: thin; 
-    padding-right: 10px;
-}
-
-/* 手机端适配：变成底部卡片 */
-@media (max-width: 768px) {
-    #bg-video {
-        object-position: center center; /* 手机上恢复居中 */
-    }
-
-    .story-container {
-        top: auto;
-        bottom: 0; /* 靠底部 */
-        left: 0;
-        width: 100%; /* 宽度铺满 */
-        height: 60vh; /* 占据屏幕下半部分 */
-        max-width: 100%;
-        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
-        border-right: none;
-        border-top: 1px solid rgba(255,255,255,0.2);
-        padding: 30px 20px;
-        animation: slideUp 0.6s ease-out;
-    }
-}
-
-/* 侧边栏滑入动画 */
-@keyframes slideRight {
-    from { opacity: 0; transform: translateX(-50px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* 手机端上滑动画 */
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-        /* 章节标题 */
-        #chapter-title {
-            font-size: 2.5rem;
-            margin-top: 0;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 10px;
-            letter-spacing: 1px;
+        /* --- 2. 背景视频 (核心适配) --- */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 铺满全屏 */
+            
+            /* 【关键技巧】 */
+            /* 70% center 意味着让视频的重心稍稍向右偏移 */
+            /* 这样原本在画面正中间的主体（如石头、鹦鹉）就会出现在屏幕右侧，避开左边的文字 */
+            object-position: 70% center; 
+            
+            z-index: -1; /* 放在最底层 */
+            filter: brightness(0.6); /* 稍微压暗，保证文字清晰 */
+            transition: opacity 0.5s ease;
         }
+
+        /* --- 3. 侧边栏容器 (左文右图) --- */
+        .story-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0; /* 高度铺满 */
+            
+            width: 480px; /* 侧边栏宽度 */
+            max-width: 90vw; /* 防止在小屏幕上溢出 */
+            
+            /* 渐变玻璃背景 */
+            background: linear-gradient(to right, rgba(0,0,0,0.95), rgba(0,0,0,0.7)); 
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            border-right: 1px solid rgba(255, 255, 255, 0.15); /* 右侧分割线 */
+            
+            padding: 60px 40px; /* 内部留白 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            
+            /* 进场动画 */
+            animation: slideRight 1s ease-out;
+            z-index: 10;
+        }
+
+        /* --- 4. 标题样式 --- */
+        header {
+            margin-bottom: 20px;
+            flex-shrink: 0; /* 防止标题被压缩 */
+        }
+
         #chapter-num {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #d4af37; /* 金色 */
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
-        /* 滚动文字区域 */
-       .text-scroll-area {
-           margin-top: 20px;
-           margin-bottom: 30px;
-           flex: 1;
-           overflow-y: auto; 
-           padding-right: 10px;
-    
-        /* --- 新增：隐藏滚动条但允许滚动 --- */
-           scrollbar-width: none; /* Firefox */
-           -ms-overflow-style: none;  /* IE and Edge */
-        }
-        /* Chrome, Safari, Opera 隐藏滚动条 */
-       .text-scroll-area::-webkit-scrollbar { 
-           display: none; 
+        #chapter-title {
+            font-size: 2.2rem;
+            margin: 0;
+            line-height: 1.2;
+            font-weight: normal;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* 滚动条美化 */
-        .text-scroll-area::-webkit-scrollbar { width: 8px; }
-        .text-scroll-area::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
-        .text-scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+        /* --- 5. 滚动文字区域 (自动滚动核心) --- */
+        .text-scroll-area {
+            flex: 1; /* 占据剩余所有空间 */
+            overflow-y: auto; /* 允许内部滚动 */
+            padding-right: 15px;
+            margin-bottom: 30px;
+            
+            /* 隐藏滚动条但保留功能 */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE */
+        }
+        .text-scroll-area::-webkit-scrollbar { 
+            display: none; /* Chrome/Safari */
+        }
 
+        /* 正文段落 */
         p {
             font-size: 1.15rem;
             line-height: 1.8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: justify;
+            color: rgba(255, 255, 255, 0.9);
         }
 
+        /* 引用块 */
         blockquote {
-            border-left: 4px solid #d4af37;
-            margin: 20px 0;
+            border-left: 3px solid #d4af37;
+            margin: 30px 0;
             padding-left: 20px;
             font-style: italic;
             color: #f1c40f;
             background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
         }
 
-        /* --- 4. 底部导航按钮 --- */
+        /* --- 6. 底部导航按钮 --- */
         .nav-buttons {
+            flex-shrink: 0; /* 防止按钮被压缩 */
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 20px;
+            padding-top: 25px;
         }
 
         button {
             background: transparent;
-            border: 1px solid white;
+            border: 1px solid rgba(255, 255, 255, 0.6);
             color: white;
             padding: 10px 25px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -188,27 +146,54 @@
         button:hover {
             background: white;
             color: black;
+            border-color: white;
         }
 
         button:disabled {
-            border-color: #555;
-            color: #555;
-            cursor: not-allowed;
-            pointer-events: none;
+            border-color: #444;
+            color: #444;
+            cursor: default;
         }
 
-        /* 动画 */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translate(-50%, -45%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
+        /* --- 动画定义 --- */
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
-        /* 文字淡入效果 */
         .fade-in-text {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.8s ease-in-out;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* --- 7. 手机端适配 (变为底部卡片) --- */
+        @media (max-width: 768px) {
+            #bg-video {
+                object-position: center center; /* 手机上恢复居中 */
+            }
+
+            .story-container {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                width: 100%; /* 宽度铺满 */
+                height: 60vh; /* 占据下半屏 */
+                max-width: 100%;
+                border-right: none;
+                border-top: 1px solid rgba(255,255,255,0.3);
+                background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.8));
+                padding: 30px 25px;
+                animation: slideUp 0.6s ease-out;
+            }
+
+            #chapter-title { font-size: 1.6rem; }
+            p { font-size: 1rem; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -227,14 +212,13 @@
             </div>
 
         <div class="nav-buttons">
-            <button id="btn-prev" onclick="changeChapter(-1)">Previous</button>
-            <button id="btn-next" onclick="changeChapter(1)">Next Chapter</button>
+            <button id="btn-prev" onclick="changeChapter(-1)">Prev</button>
+            <button id="btn-next" onclick="changeChapter(1)">Next</button>
         </div>
     </div>
 
     <script>
-        // --- 数据配置 ---
-        // 这里存储了你所有的章节内容和对应的视频文件名
+        // --- 1. 数据配置 (这里包含了你所有的文字) ---
         const chapters = [
             {
                 id: 1,
@@ -294,9 +278,10 @@
             }
         ];
 
-        // --- 逻辑控制 ---
-        let currentIndex = 0; // 当前章节索引 (0-4)
-
+        // --- 2. 核心逻辑 ---
+        let currentIndex = 0;
+        let scrollTimer = null;
+        
         const videoEl = document.getElementById('bg-video');
         const videoSource = document.getElementById('video-source');
         const titleEl = document.getElementById('chapter-title');
@@ -305,32 +290,64 @@
         const prevBtn = document.getElementById('btn-prev');
         const nextBtn = document.getElementById('btn-next');
 
-        // 初始化页面
-        function init() {
-            renderChapter(0);
+        // 自动滚动控制
+        function startAutoScroll() {
+            stopAutoScroll(); // 防止多重定时器
+            scrollTimer = setInterval(() => {
+                if (contentEl.scrollTop + contentEl.clientHeight < contentEl.scrollHeight) {
+                    contentEl.scrollTop += 1; // 每次下滚1像素
+                } else {
+                    stopAutoScroll(); // 到底部停止
+                }
+            }, 60); // 滚动速度：数字越大越慢 (60ms)
         }
 
-        // 渲染指定章节
+        function stopAutoScroll() {
+            if (scrollTimer) {
+                clearInterval(scrollTimer);
+                scrollTimer = null;
+            }
+        }
+
+        // 初始化
+        function init() {
+            renderChapter(0);
+            
+            // 鼠标交互监听
+            contentEl.addEventListener('mouseenter', stopAutoScroll);
+            contentEl.addEventListener('mouseleave', startAutoScroll);
+            contentEl.addEventListener('touchstart', stopAutoScroll); // 手机触摸
+            contentEl.addEventListener('touchend', () => setTimeout(startAutoScroll, 2000));
+        }
+
+        // 渲染章节
         function renderChapter(index) {
             const chapter = chapters[index];
             
-            // 1. 切换文字内容 (添加淡入动画类)
+            // 1. 文字淡入
             contentEl.classList.remove('fade-in-text');
             void contentEl.offsetWidth; // 触发重绘
             contentEl.classList.add('fade-in-text');
 
+            // 2. 更新内容
             numEl.textContent = `Chapter ${chapter.id}`;
             titleEl.textContent = chapter.title;
             contentEl.innerHTML = chapter.content;
             
-            // 重置滚动条到顶部
+            // 3. 重置滚动
             contentEl.scrollTop = 0;
+            
+            // 4. 延迟开启自动滚动 (1秒后开始)
+            setTimeout(startAutoScroll, 1000);
 
-            // 2. 切换视频
-            videoSource.src = chapter.video;
-            videoEl.load(); // 重新加载视频
+            // 5. 切换视频
+            // 只有当文件名变化时才重新加载，防止闪烁
+            if (!videoSource.src.includes(chapter.video)) {
+                videoSource.src = chapter.video;
+                videoEl.load();
+            }
 
-            // 3. 更新按钮状态
+            // 6. 更新按钮
             if (index === 0) {
                 prevBtn.disabled = true;
                 prevBtn.style.opacity = "0.5";
@@ -339,29 +356,25 @@
                 prevBtn.style.opacity = "1";
             }
 
+            // 处理最后一页跳转逻辑
             if (index === chapters.length - 1) {
                 nextBtn.textContent = "Epilogue";
+                nextBtn.onclick = () => window.location.href = 'epilogue.html';
             } else {
-                nextBtn.textContent = "Next Chapter";
+                nextBtn.textContent = "Next";
+                nextBtn.onclick = () => changeChapter(1);
             }
         }
 
-        // 按钮点击事件处理
         function changeChapter(direction) {
             const newIndex = currentIndex + direction;
-
             if (newIndex >= 0 && newIndex < chapters.length) {
                 currentIndex = newIndex;
                 renderChapter(currentIndex);
-            } else if (newIndex >= chapters.length) {
-                // 如果是最后一页再点Next，跳转到结尾页
-                window.location.href = 'epilogue.html';
             }
         }
 
-        // 启动
         init();
     </script>
-
 </body>
 </html>
