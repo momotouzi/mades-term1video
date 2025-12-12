@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epilogue - The Living Echo</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Georgia", serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* 背景视频：建议复用第一章的草原，但处理成黑白 */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: grayscale(100%) brightness(0.3); /* 黑白且压暗，营造回忆感 */
+            opacity: 0;
+            animation: fadeInVideo 3s ease-in forwards;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            font-weight: normal;
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards 1s; /* 延迟出现 */
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards 2s; /* 依次出现 */
+        }
+
+        .highlight {
+            font-size: 1.4rem;
+            color: #fff;
+            font-style: italic;
+            border-top: 1px solid #555;
+            border-bottom: 1px solid #555;
+            padding: 20px 0;
+            margin: 40px 0;
+            display: block;
+        }
+
+        .dedication {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 60px;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 3s ease forwards 4s;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #555;
+            border: 1px solid #333;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+            transition: all 0.5s;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 5s;
+        }
+        .home-btn:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInVideo {
+            to { opacity: 1; }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="chapter1.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <h1>The Living Echo</h1>
+
+        <p>
+            We study languages to decode the world, yet often miss the simplest truth: language is the bridge between souls.
+        </p>
+
+        <p>
+            We were opposites. I was the silence; you were the noise. In your final days, I learned the lexicon of your games, trying to speak your world when this world was failing you.
+        </p>
+
+        <p>
+            When I finally stood on that stage and shattered the silence, it wasn't just my voice.
+        </p>
+
+        <span class="highlight">
+            I have become the brave one.<br>
+            I speak, so you can live through me.
+        </span>
+
+        <div class="dedication">
+            In memory of my brother (2000-2025)<br>
+            And the eternal summer we shared.
+        </div>
+
+        <a href="index.html" class="home-btn">Restart the Journey</a>
+    </div>
+
+</body>
+</html>
