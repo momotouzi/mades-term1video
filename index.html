@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>In Memory of My Brother</title>
+    <title>Steppe, Concrete, and Stage - WANG Jun</title>
     <style>
-        /* 1. 基础设置 */
+        /* --- 基础设置 --- */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* 禁止滚动，保持全屏静谧感 */
-            font-family: "Times New Roman", Serif, "宋体"; /* 使用衬线体，更具文学感 */
+            overflow: hidden;
+            font-family: "Times New Roman", Serif, "宋体";
         }
 
-        /* 2. 背景视频设置 */
+        /* --- 视频背景 --- */
         #bg-video {
             position: fixed;
             right: 0;
             bottom: 0;
             min-width: 100%;
             min-height: 100%;
-            z-index: -1; /* 放在最底层 */
-            object-fit: cover; /* 确保视频铺满屏幕不变形 */
-            filter: brightness(0.7); /* 把视频稍微压暗一点，让文字更清晰 */
+            z-index: -1;
+            object-fit: cover;
+            filter: brightness(0.6); /* 稍微调暗，让白色文字更突出 */
         }
 
-        /* 3. 内容容器 */
+        /* --- 内容容器 --- */
         .content {
             position: absolute;
             top: 0;
@@ -35,34 +35,64 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify_content: center; /* 垂直居中 */
-            align-items: center; /* 水平居中 */
+            justify-content: center;
+            align-items: center;
             text-align: center;
             color: white;
             z-index: 1;
         }
 
-        /* 4. 文字排版 */
+        /* --- 排版样式 --- */
         h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* 文字阴影 */
+            font-size: 3.5rem; /* 大标题 */
+            margin-bottom: 0.2rem;
+            letter-spacing: 3px;
             font-weight: normal;
+            text-transform: uppercase;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+            animation: fadeIn 2s ease-in-out; /* 淡入动画 */
         }
 
-        p {
+        .subtitle {
             font-size: 1.2rem;
-            line-height: 1.6;
-            max-width: 600px; /* 限制每行文字长度 */
-            margin-top: 20px;
+            font-style: italic;
             opacity: 0.9;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            animation: fadeIn 3s ease-in-out;
         }
 
-        /* 5. 手机端适配 */
+        /* --- 按钮样式 --- */
+        .btn-explore {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid white; /* 幽灵按钮风格 */
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease; /* 平滑过渡效果 */
+            animation: fadeIn 4s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-explore:hover {
+            background-color: white;
+            color: black;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        /* --- 动画关键帧 --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 手机适配 --- */
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
-            p { font-size: 1rem; padding: 0 20px; }
+            .subtitle { font-size: 0.9rem; padding: 0 20px; }
         }
     </style>
 </head>
@@ -70,17 +100,13 @@
 
     <video autoplay muted loop playsinline id="bg-video">
         <source src="background.mp4" type="video/mp4">
-        您的浏览器不支持 HTML5 视频。
     </video>
 
     <div class="content">
-        <h1>Forever Riding</h1>
-        <p>
-            The wind is still here, and so are you.<br>
-            策马奔腾，以此纪念我不熄的思念。
-            <br><br>
-            2000 - 2025
-        </p>
+        <h1>Steppe, Concrete, and Stage</h1>
+        <p class="subtitle">A Linguistic Journey from Xinjiang to Hong Kong</p>
+        
+        <a href="story.html" class="btn-explore">Explore More</a>
     </div>
 
 </body>
