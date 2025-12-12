@@ -331,7 +331,7 @@
             }
 
             if (index === chapters.length - 1) {
-                nextBtn.textContent = "Back to Home";
+                nextBtn.textContent = "Epilogue";
             } else {
                 nextBtn.textContent = "Next Chapter";
             }
@@ -345,8 +345,8 @@
                 currentIndex = newIndex;
                 renderChapter(currentIndex);
             } else if (newIndex >= chapters.length) {
-                // 如果是最后一页再点Next，返回首页
-                window.location.href = 'index.html';
+                // 如果是最后一页再点Next，跳转到结尾页
+                window.location.href = 'epilogue.html';
             }
         }
 
